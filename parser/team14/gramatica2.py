@@ -207,8 +207,6 @@ lexer = lex.lex()
 # ----------------------------------------------DEFINIMOS LA GRAMATICA------------------------------------------
 # Definición de la gramática
 
-from expresiones import *
-from instrucciones import *
 
 
 def p_init(t):
@@ -234,31 +232,34 @@ def p_instruccion(t):
 
 
 def p_SELECT(t):
-    ''' SELECT : select distinct  LEXP r_from LFROM WHERE ptcoma
-	          | select  LEXP r_from LFROM WHERE ptcoma
-	'''
+    ''' SELECT : select distinct  LSELECT r_from LFROM WHERE GROUP HAVING
+	| select  LSELECT r_from LFROM WHERE  GROUP HAVING
+    '''
 
-
+def p_LSELECT(t):
+    '''
+    LSELECT : LEXP
+		| multiplicacion
+    '''
 def p_LFROM(t):
     '''LFROM : LEXP
 	        |  para SELECT parc
-'''
+    '''
 
 
 def p_WHERE(t):
     ''' WHERE : where EXP
-                | where EXP GROUP
-	            | GROUP'''
+	            | '''
 
 
 def p_GROUP(t):
-    ''' GROUP :  group by EXP HAVING
-	            | HAVING'''
+    ''' GROUP :  group by EXP
+	            | '''
 
 
 def p_HAVING(t):
     ''' HAVING : having EXP
-	| '''
+	| ptcoma '''
 
 
 def p_OPLOGICA(t):
@@ -280,8 +281,7 @@ def p_RELACIONAL(t):
 
 def p_LEXP(t):
     '''LEXP : LEXP coma EXP
-	| EXP
-	| multiplicacion'''
+	| EXP'''
 
 
 def p_EXP(t):
