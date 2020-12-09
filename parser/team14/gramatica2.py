@@ -178,7 +178,7 @@ def t_COMENTARIO_MULTILINEA(t):
 
 # Comentario simple // ...
 def t_COMENTARIO_SIMPLE(t):
-    r'//.*\n'
+    r'--.*\n'
     t.lexer.lineno += 1
 
 
@@ -261,61 +261,40 @@ def p_HAVING(t):
     ''' HAVING : having EXP
 	| ptcoma '''
 
-
-def p_OPLOGICA(t):
-    '''OPLOGICA :  not RELACIONAL
-                 | OPLOGICA and RELACIONAL
-                 | OPLOGICA or RELACIONAL'''
-
-
-def p_RELACIONAL(t):
-    '''RELACIONAL : RELACIONAL mayor EXP
-                 | RELACIONAL menor EXP
-                 | RELACIONAL mayor_igual EXP
-                 | RELACIONAL menor_igual EXP
-                 | RELACIONAL igual EXP
-                 | RELACIONAL diferente1 EXP
-                 | RELACIONAL diferente2 EXP
-                 | EXP'''
-
-
 def p_LEXP(t):
     '''LEXP : LEXP coma EXP
-	| EXP'''
+	| EXP
+	| multiplicacion'''
 
 
 def p_EXP(t):
-    '''EXP : EXP mas EXP1
-            | EXP menos EXP1
-            | EXP multiplicacion  EXP1
-            | EXP division EXP1
-            | EXP1'''
-
-
-def p_EXP1(t):
-    '''EXP1 : EXP1 modulo EXP2
-             | EXP1 elevado EXP2
-             | EXP2'''
-
-
-def p_EXP2(t):
-    '''EXP2 : para EXP parac
-              | UNARIO EXP
-              | int
-              | decimal
-              | varchar
-              | char
-              | true
-              | false
-              | id
-              | id punto EXP
-'''
-
-
-def p_UNARIO(t):
-    '''UNARIO : mas
-                | menos'''
-
+    '''EXP : EXP mas EXP
+            | EXP menos EXP
+            | EXP multiplicacion  EXP
+            | EXP division EXP
+            | EXP modulo EXP
+            | EXP elevado EXP
+            | EXP and EXP
+            | EXP or EXP
+            | EXP mayor EXP
+            | EXP menor EXP
+            | EXP mayor_igual EXP
+            | EXP menor_igual EXP
+            | EXP igual EXP
+            | EXP diferente1 EXP
+            | EXP diferente2 EXP
+            | mas EXP
+            | menos EXP
+            | not EXP
+            | id punto EXP
+            | para EXP parc 
+            | int
+            | decimal
+            | varchar
+            | char
+            | true
+            | false
+            | id'''
 
 def p_error(t):
     print(t)
