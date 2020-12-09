@@ -231,6 +231,7 @@ def p_instruccion(t):
     t[0] = t[1]
 
 
+
 def p_SELECT(t):
     ''' SELECT : select distinct  LSELECT r_from LFROM WHERE GROUP HAVING
 	| select  LSELECT r_from LFROM WHERE  GROUP HAVING
@@ -242,8 +243,16 @@ def p_LSELECT(t):
 		| multiplicacion
     '''
 def p_LFROM(t):
-    '''LFROM : LEXP
-	        |  para SELECT parc
+    ''' LFROM : LFROM coma FROM
+        | FROM
+    '''
+
+def p_FROM(t):
+    '''
+    FROM : EXP
+	| EXP as id
+    | para SELECT parc
+    | para SELECT parc as id
     '''
 
 
@@ -263,8 +272,7 @@ def p_HAVING(t):
 
 def p_LEXP(t):
     '''LEXP : LEXP coma EXP
-	| EXP
-	| multiplicacion'''
+	| EXP'''
 
 
 def p_EXP(t):
@@ -294,7 +302,8 @@ def p_EXP(t):
             | char
             | true
             | false
-            | id'''
+            | id
+	    |SELECT '''
 
 def p_error(t):
     print(t)
