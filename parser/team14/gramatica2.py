@@ -79,7 +79,8 @@ reservadas = {
     'values': 'values',
     'group': 'group',
     'by': 'by',
-    'having': 'having'
+    'having': 'having',
+    'as':'as'
 }
 
 tokens = [
@@ -226,8 +227,7 @@ def p_instrucciones_instruccion(t):
 
 
 def p_instruccion(t):
-    '''instruccion      : OPLOGICA
-                        | SELECT '''
+    '''instruccion      :  SELECT '''
     t[0] = t[1]
 
 
@@ -247,6 +247,8 @@ def p_LFROM(t):
         | FROM
     '''
 
+
+
 def p_FROM(t):
     '''
     FROM : EXP
@@ -254,7 +256,6 @@ def p_FROM(t):
     | para SELECT parc
     | para SELECT parc as id
     '''
-
 
 def p_WHERE(t):
     ''' WHERE : where EXP
@@ -276,6 +277,7 @@ def p_LEXP(t):
 
 
 def p_EXP(t):
+
     '''EXP : EXP mas EXP
             | EXP menos EXP
             | EXP multiplicacion  EXP
@@ -303,7 +305,40 @@ def p_EXP(t):
             | true
             | false
             | id
-	    |SELECT '''
+	       | SELECT '''
+
+    '''EXP : EXP mas EXP1
+            | EXP menos EXP1
+            | EXP multiplicacion  EXP1
+            | EXP division EXP1
+            | EXP1'''
+
+
+def p_EXP1(t):
+    '''EXP1 : EXP1 modulo EXP2
+             | EXP1 elevado EXP2
+             | EXP2'''
+
+
+def p_EXP2(t):
+    '''EXP2 : para EXP parc
+              | UNARIO EXP
+              | int
+              | decimal
+              | varchar
+              | char
+              | true
+              | false
+              | id
+              | id punto EXP
+'''
+
+
+def p_UNARIO(t):
+    '''UNARIO : mas
+                | menos'''
+
+
 
 def p_error(t):
     print(t)
